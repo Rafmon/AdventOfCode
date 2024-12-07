@@ -1,0 +1,15 @@
+C:\Users\Rafmo\git\AdventOfCode\c#\bin\Debug\net8.0\AdventOfCode.exe
+C:\Users\Rafmo\git\AdventOfCode\c#\bin\Debug\net8.0\AdventOfCode.deps.json
+C:\Users\Rafmo\git\AdventOfCode\c#\bin\Debug\net8.0\AdventOfCode.runtimeconfig.json
+C:\Users\Rafmo\git\AdventOfCode\c#\bin\Debug\net8.0\AdventOfCode.dll
+C:\Users\Rafmo\git\AdventOfCode\c#\bin\Debug\net8.0\AdventOfCode.pdb
+C:\Users\Rafmo\git\AdventOfCode\c#\obj\Debug\net8.0\AdventOfCode.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Rafmo\git\AdventOfCode\c#\obj\Debug\net8.0\AdventOfCode.AssemblyInfoInputs.cache
+C:\Users\Rafmo\git\AdventOfCode\c#\obj\Debug\net8.0\AdventOfCode.AssemblyInfo.cs
+C:\Users\Rafmo\git\AdventOfCode\c#\obj\Debug\net8.0\AdventOfCode.csproj.CoreCompileInputs.cache
+C:\Users\Rafmo\git\AdventOfCode\c#\obj\Debug\net8.0\AdventOfCode.sourcelink.json
+C:\Users\Rafmo\git\AdventOfCode\c#\obj\Debug\net8.0\AdventOfCode.dll
+C:\Users\Rafmo\git\AdventOfCode\c#\obj\Debug\net8.0\refint\AdventOfCode.dll
+C:\Users\Rafmo\git\AdventOfCode\c#\obj\Debug\net8.0\AdventOfCode.pdb
+C:\Users\Rafmo\git\AdventOfCode\c#\obj\Debug\net8.0\AdventOfCode.genruntimeconfig.cache
+C:\Users\Rafmo\git\AdventOfCode\c#\obj\Debug\net8.0\ref\AdventOfCode.dll
