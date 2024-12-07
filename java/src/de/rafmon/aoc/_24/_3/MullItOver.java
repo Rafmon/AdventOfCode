@@ -1,4 +1,4 @@
-package de.rafmon.aoc.twentyfour.three;
+package de.rafmon.aoc._24._3;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

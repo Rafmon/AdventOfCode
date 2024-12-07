@@ -1,4 +1,4 @@
-package de.rafmon.aoc.twentyfour.one;
+package de.rafmon.aoc._24._1;
 
 import java.util.ArrayList;
 import java.util.Collections;
