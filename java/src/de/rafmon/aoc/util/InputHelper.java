@@ -11,7 +11,7 @@ public class InputHelper {
 	public static char[][] convertInputToMatrix(String aInput) {
 		String splitRegex = "";
 		if (aInput.contains("\r\n")) {
-			splitRegex = "\n";
+			splitRegex = "\r\n";
 		} else {
 			splitRegex = "\n";
 		}
