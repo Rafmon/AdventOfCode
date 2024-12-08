@@ -5,6 +5,9 @@ import java.util.Set;
 
 import de.rafmon.aoc.util.InputHelper;
 
+/**
+ * run this with increased Stack Size -Xss1024m in the run config vm args.
+ */
 public class GuardGallivant {
 
 	public static final String INPUT = ""
@@ -155,7 +158,7 @@ public class GuardGallivant {
 	}
 
 	private static void moveNorth(int starty, int startx) {
-		visitedLocations.add("" + starty + startx);
+		visitedLocations.add(starty + "," + startx);
 		landscape[starty][startx] = 'X';
 		if (starty - 1 < 0) {
 			return;
@@ -169,7 +172,8 @@ public class GuardGallivant {
 	}
 
 	private static void moveEast(int starty, int startx) {
-		visitedLocations.add("" + starty + startx);
+		visitedLocations.add(starty + "," + startx);
+		landscape[starty][startx] = 'X';
 		if (startx + 1 > landscape[starty].length - 1) {
 			return;
 		} else {
@@ -183,7 +187,8 @@ public class GuardGallivant {
 	}
 
 	private static void moveSouth(int starty, int startx) {
-		visitedLocations.add("" + starty + startx);
+		visitedLocations.add(starty + "," + startx);
+		landscape[starty][startx] = 'X';
 		if (starty + 1 > landscape.length - 1) {
 			return;
 		} else {
@@ -196,7 +201,8 @@ public class GuardGallivant {
 	}
 
 	private static void moveWest(int starty, int startx) {
-		visitedLocations.add("" + starty + startx);
+		landscape[starty][startx] = 'X';
+		visitedLocations.add(starty + "," + startx);
 		if (startx - 1 < 0) {
 			return;
 		} else {
