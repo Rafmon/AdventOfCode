@@ -9,14 +9,7 @@ public class InputHelper {
 	 * @return
 	 */
 	public static char[][] convertInputToMatrix(String aInput) {
-		String splitRegex = "";
-		if (aInput.contains("\r\n")) {
-			splitRegex = "\r\n";
-		} else {
-			splitRegex = "\n";
-		}
-
-		String[] input = aInput.split(splitRegex);
+		String[] input = convertToStringArray(aInput);
 		char[][] matrix = new char[input.length][input[0].length()];
 
 		for (int i = 0; i < input.length; i++) {
@@ -25,6 +18,18 @@ public class InputHelper {
 
 		return matrix;
 
+	}
+
+	public static String[] convertToStringArray(String aInput) {
+		String splitRegex = "";
+		if (aInput.contains("\r\n")) {
+			splitRegex = "\r\n";
+		} else {
+			splitRegex = "\n";
+		}
+
+		String[] input = aInput.split(splitRegex);
+		return input;
 	}
 
 }
