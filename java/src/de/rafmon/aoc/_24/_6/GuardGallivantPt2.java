@@ -1,9 +1,5 @@
 package de.rafmon.aoc._24._6;
 
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -42,19 +38,18 @@ public class GuardGallivantPt2 {
 
 	private static void move(char[][] landscape, int startY, int startX, Direction direction) {
 		int walkingDistance = 0;
+		
 		while (true) {
 			int newY = direction.getNextY(startY);
 			int newX = direction.getNextX(startX);
 
 			if (newY < 0 || newY >= landscape.length || newX < 0 || newX >= landscape[0].length) {
 				return;
-			}
-			
-			if (walkingDistance > 100000) {
+			}			
+			if (walkingDistance > 10000) {
 				obstacles++;
 				return;
-			} 
-
+			}
 			if (landscape[newY][newX] == '#') {
 				direction = direction.nextClockwise();
 			}  else {
