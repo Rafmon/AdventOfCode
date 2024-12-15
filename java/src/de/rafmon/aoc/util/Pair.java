@@ -1,5 +1,7 @@
 package de.rafmon.aoc.util;
 
+import java.util.Objects;
+
 public class Pair<K, V> {
     private final K key;
     private final V value;
@@ -24,6 +26,20 @@ public class Pair<K, V> {
     @Override
     public String toString() {
         return "(" + key + ", " + value + ")";
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true; 
+        if (obj == null || getClass() != obj.getClass()) return false; 
+
+        Pair<?, ?> other = (Pair<?, ?>) obj; 
+        return Objects.equals(key, other.key) && Objects.equals(value, other.value); 
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(key, value);
     }
     
 }
