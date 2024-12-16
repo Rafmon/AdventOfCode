@@ -1,63 +1,67 @@
 package de.rafmon.aoc._24._9;
 
+import java.util.Arrays;
+
 public class DiskFragmenter {
 
 	public static void main(String[] args) {
-		String decompressed = generateCecompresseDiscMap(DiskFragmenterInput.INPUT);
-		String gapsRemoved = removeGaps(decompressed);
-		System.out.println(gapsRemoved);
-		long checkSum = generateChecksum(gapsRemoved);
+		int[] diskMap = generateCecompresseDiscMap(DiskFragmenterInput.INPUT);
+		removeGaps(diskMap);
+		long checkSum = generateChecksum(diskMap);
 		System.out.println("Checksum: " + checkSum);
-		
-		//TODO für den fix in int array umbauen
+
 	}
 
-	private static String generateCecompresseDiscMap(String input) {
-		StringBuilder decompressedDiscMap = new StringBuilder();
+	private static int[] generateCecompresseDiscMap(String input) {
+		int[] decompressedDiscMap = new int[input.length() * 10];
+		Arrays.fill(decompressedDiscMap, -1);
 		boolean decompModeSwitch = true;
-		long id = 0;
+		int id = 0;
+		int arrayIndex = 0;
 		for (int i = 0; i < input.length(); i++) {
 			if (decompModeSwitch) { // fill with the specified amount of IDs
-				decompress(decompressedDiscMap, "" + id, Character.getNumericValue(input.charAt(i)));
+				int amount = Character.getNumericValue(input.charAt(i));
+				for (int a = 0; a < amount; a++) {
+					decompressedDiscMap[arrayIndex] = id;
+					arrayIndex++;
+				}
 				id++;
 			} else { // fill with the specified amount of blanks('.')
-				decompress(decompressedDiscMap, ".", Character.getNumericValue(input.charAt(i)));
+				int amount = Character.getNumericValue(input.charAt(i));
+				for (int a = 0; a < amount; a++) {
+					decompressedDiscMap[arrayIndex] = -1;
+					arrayIndex++;
+				}
 			}
 			decompModeSwitch = !decompModeSwitch;
 		}
-		return decompressedDiscMap.toString();
+		return decompressedDiscMap;
 	}
 
-	private static void decompress(StringBuilder decompressedDiscMap, String s, int amount) {
-		for (int j = 0; j < amount; j++) {
-			decompressedDiscMap.append(s);
-		}
-	}
-
-	private static String removeGaps(String decompressed) {
-		StringBuilder removedGaps = new StringBuilder();
-		int end = decompressed.length()-1;
+	private static int[] removeGaps(int[] decompressed) {
+		int end = decompressed.length - 1;
 		for (int i = 0; i <= end; i++) {
-			if (decompressed.charAt(i) == '.') {
-				while(decompressed.charAt(end) == '.') {
+			if (decompressed[i] == -1) {
+				while (decompressed[end] == -1) {
 					end--;
 				}
-				removedGaps.append(decompressed.charAt(end));
+				decompressed[i] = decompressed[end];
+				decompressed[end] = -1;
 				end--;
-			}else {
-				removedGaps.append(decompressed.charAt(i));
 			}
 		}
 
-		return removedGaps.toString();
+		return decompressed;
 	}
-	
-	private static long generateChecksum(String gapsRemoved) {
+
+	private static long generateChecksum(int[] gapsRemoved) {
 		long CheckSum = 0L;
 		long id = 0;
-		for(int i = 0; i < gapsRemoved.length(); i++) {
-			CheckSum += Character.getNumericValue(gapsRemoved.charAt(i)) * id;
-			id++;
+		for (int i = 0; i < gapsRemoved.length; i++) {
+			if (gapsRemoved[i] != -1) {
+				CheckSum += gapsRemoved[i] * id;
+				id++;
+			}
 		}
 		return CheckSum;
 	}
