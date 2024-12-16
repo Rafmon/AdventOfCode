@@ -26,7 +26,7 @@ public class DiskFragmenter {
 					arrayIndex++;
 				}
 				id++;
-			} else { // fill with the specified amount of blanks('.')
+			} else { // fill with the specified amount of blanks('.'), but in this impl -1 instead
 				int amount = Character.getNumericValue(input.charAt(i));
 				for (int a = 0; a < amount; a++) {
 					decompressedDiscMap[arrayIndex] = -1;
@@ -38,7 +38,7 @@ public class DiskFragmenter {
 		return decompressedDiscMap;
 	}
 
-	private static int[] removeGaps(int[] decompressed) {
+	private static void removeGaps(int[] decompressed) {
 		int end = decompressed.length - 1;
 		for (int i = 0; i <= end; i++) {
 			if (decompressed[i] == -1) {
@@ -50,8 +50,6 @@ public class DiskFragmenter {
 				end--;
 			}
 		}
-
-		return decompressed;
 	}
 
 	private static long generateChecksum(int[] gapsRemoved) {
