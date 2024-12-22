@@ -1,32 +1,30 @@
 package de.rafmon.aoc._24._9;
 
-import java.util.LinkedList;
-import java.util.ListIterator;
-
-import de.rafmon.aoc.util.HowCanThisEvenHappenException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DiskFragmenterPt2 {
 
 	public static void main(String[] args) {
-		LinkedList<DFFile> diskMap = generateCecompresseDiscMap(DiskFragmenterInput.INPUT);
+		List<DFFile> diskMap = generateCecompresseDiscMap(DiskFragmenterInput.INPUT);
 		removeGaps(diskMap);
 		long checkSum = generateChecksum(diskMap);
 		System.out.println("Checksum: " + checkSum);
 
 	}
 
-	private static LinkedList<DFFile> generateCecompresseDiscMap(String input) {
-		LinkedList<DFFile> decompressedDiskMap = new LinkedList<DFFile>();
+	private static List<DFFile> generateCecompresseDiscMap(String input) {
+		List<DFFile> decompressedDiskMap = new ArrayList<DFFile>(input.length());
 		boolean decompModeSwitch = true;
 		int id = 0;
 		for (int i = 0; i < input.length(); i++) {
 			if (decompModeSwitch) { // fill with the specified file
 				int amount = Character.getNumericValue(input.charAt(i));
-				decompressedDiskMap.addLast(new DFFile(id, amount));
+				decompressedDiskMap.add(new DFFile(id, amount));
 				id++;
 			} else { // fill with an {@DFEmptyFile} placeholder
 				int amount = Character.getNumericValue(input.charAt(i));
-				decompressedDiskMap.addLast(new DFEmptyFile(amount));
+				decompressedDiskMap.add(new DFEmptyFile(amount));
 
 			}
 			decompModeSwitch = !decompModeSwitch;
@@ -34,44 +32,37 @@ public class DiskFragmenterPt2 {
 		return decompressedDiskMap;
 	}
 
-	private static void removeGaps(LinkedList<DFFile> diskMap) {
-		LinkedList<DFFile> newDiscMap = new LinkedList<DFFile>();
-		ListIterator<DFFile> backward = diskMap.listIterator(diskMap.size());
-		DFFile back = backward.previous();
-		for (ListIterator<DFFile> forward = diskMap.listIterator(); forward.nextIndex() < backward
-				.previousIndex(); forward.hasNext()) {
-			DFFile front = forward.next();
-			if (front instanceof DFEmptyFile) {
-				while (back instanceof DFEmptyFile || back.getSize() > front.getSize()) {
-					back = backward.previous();
-				}
-				if (back.content == front.content) {
-					var temp = front;
-					forward.set(back);
-					backward.set(temp);
-				} else if (back.getSize() < front.getSize()) {
-					int diff = front.getSize() - back.getSize();
-					var temp = front;
-					forward.set(back);
-					forward.add(new DFEmptyFile(diff));
-					backward.set(temp);
-				} else {
-					throw new HowCanThisEvenHappenException();
+	private static void removeGaps(List<DFFile> diskMap) {
+		for (int i = diskMap.size() - 1; 0 <= i; i--) {
+			DFFile back = diskMap.get(i);
+			if (back.getClass() == DFFile.class) {
+				for (int j = 0; j < i; j++) {
+					DFFile front = diskMap.get(j);
+					if (front.getClass() == DFEmptyFile.class) {
+						if (front.getSize() == back.getSize()) {
+							diskMap.set(j, back);
+							diskMap.set(i, front);
+							break;
+						} else if (front.getSize() > back.getSize()) {
+							int fileSizeDiff = front.getSize() - back.getSize();
+							diskMap.set(j, back);
+							diskMap.add(j + 1, new DFEmptyFile(fileSizeDiff));
+							diskMap.set(i, front);
+							i++;
+							break;
+						}
+					}
 				}
 			}
 		}
 	}
 
-	private static long generateChecksum(LinkedList<DFFile> diskMap) {
+	private static long generateChecksum(List<DFFile> diskMap) {
 		long CheckSum = 0L;
-		long id = 0;
 		for (DFFile dfFile : diskMap) {
 			if (!(dfFile instanceof DFEmptyFile)) {
-				for (int content : dfFile.content) {
-					CheckSum += content * id;
-					id++;
-				}				
-				
+				CheckSum += dfFile.getId() * dfFile.getAmount();
+
 			}
 		}
 		return CheckSum;

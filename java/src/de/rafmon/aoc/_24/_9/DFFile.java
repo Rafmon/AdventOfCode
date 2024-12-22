@@ -4,16 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DFFile {
-	
-	public List<Integer> content;
-	public DFFile(int contentPart, int amount) {
+	private int id;
+	private List<Integer> content;
+	private int amount =0;
+	public DFFile(int id, int amount) {
 		this.content = new ArrayList<>();
+		this.id = id;
+		this.amount = amount;
 		if(amount > 1) {
 			for (int a = 0; a < amount; a++) {
-				content.add(contentPart);
+				content.add(id);
 			}
 		}else {
-			this.content = List.of(contentPart);
+			this.content = List.of(id);
 		}
 	}
 	
@@ -33,5 +36,12 @@ public class DFFile {
 		return content;
 	}
 	
+	public int getId() {
+		return id;
+	}
+	
+	public int getAmount() {
+		return amount;
+	}
 	
 }
