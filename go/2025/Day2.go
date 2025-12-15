@@ -1,55 +1,91 @@
 package main
 
 import (
+	"fmt"
+	"log"
 	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
 )
 
+// solution for https://adventofcode.com/2025/day/2
+
 func main() {
+	var invalidIDSum, invalidIDSumPt2 int64
+
 	data, err := os.ReadFile(filepath.Join("res", "Day2_Input.txt"))
-	var invalid_id_sum int64 = 0
+
 	if err != nil {
 		panic(err)
 	}
 
-	line := strings.TrimSpace(string(data))       // remove
-	id_ranges := strings.Split(string(line), ",") //seperate the id ranges
+	line := strings.TrimSpace(string(data))
+	idRanges := strings.Split(line, ",")
 
-	for _, id_range := range id_ranges {
+	for _, idRange := range idRanges {
+		idRange = strings.TrimSpace(idRange)
 
-		id_range_split := strings.Split(id_range, "-") // split the id range into start and end
-
-		id_range_start, err := strconv.Atoi(id_range_split[0])
-		if err != nil {
-			continue
+		idRangeStartStr, idRangeEndStr, ok := strings.Cut(idRange, "-")
+		if !ok {
+			log.Fatalf("invalid range: %q", idRange)
 		}
 
-		id_range_end, err := strconv.Atoi(id_range_split[1])
+		idRangeStart, err := strconv.ParseInt(strings.TrimSpace(idRangeStartStr), 10, 64)
 		if err != nil {
-			continue
+			log.Fatal(err)
+		}
+		idRangeEnd, err := strconv.ParseInt(strings.TrimSpace(idRangeEndStr), 10, 64)
+		if err != nil {
+			log.Fatal(err)
 		}
 
-		for id := id_range_start; id <= id_range_end; id++ { // iterte over id range
+		for id := idRangeStart; id <= idRangeEnd; id++ {
 
-			id_str := strconv.Itoa(id)
-			//println(id_str)
-			length := len(id_str)
+			idString := strconv.FormatInt(id, 10)
+			length := len(idString)
 
-			if length%2 == 1 {
-				continue
+			if length%2 == 0 {
+				mid := length / 2
+				if idString[:mid] == idString[mid:] {
+					invalidIDSum += id
+				}
 			}
 
-			id_left := id_str[:length/2]
-			id_right := id_str[length/2:]
+			// part 2 seperate
 
-			if id_left == id_right {
-				invalid_id_sum += int64(id)
+			if isRepeated(idString) {
+				invalidIDSumPt2 += id
 			}
 		}
 
 	}
+	fmt.Println(invalidIDSum, invalidIDSumPt2)
 
-	println(invalid_id_sum)
+}
+
+// isRepeated reports whether s consists of a substring repeated at least twice.
+func isRepeated(s string) bool {
+	n := len(s)
+
+	for blockLength := 1; blockLength <= n/2; blockLength++ {
+		if n%blockLength != 0 {
+			continue
+		}
+
+		block := s[:blockLength]
+		repeatFound := true
+
+		for i := blockLength; i < n; i += blockLength {
+			if s[i:i+blockLength] != block {
+				repeatFound = false
+				break
+			}
+		}
+		if repeatFound {
+			return true
+		}
+
+	}
+	return false
 }
