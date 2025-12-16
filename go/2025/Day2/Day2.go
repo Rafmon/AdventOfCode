@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"path/filepath"
 	"strconv"
 	"strings"
 )
@@ -14,7 +13,7 @@ import (
 func main() {
 	var invalidIDSum, invalidIDSumPt2 int64
 
-	data, err := os.ReadFile(filepath.Join("res", "Day2_Input.txt"))
+	data, err := os.ReadFile("Day2_Input.txt")
 
 	if err != nil {
 		panic(err)
